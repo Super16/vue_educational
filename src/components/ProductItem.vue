@@ -40,6 +40,8 @@
 
 <script>
 export default {
-  props: ['products'],
+  props: {
+    products: Array,
+  },
 };
 </script>
