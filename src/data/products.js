@@ -4,7 +4,10 @@ export default [
     title: 'Товар 1',
     categoryId: 1,
     colors: [
-      1,
+      {
+        id: 1,
+        value: '#FFBE15',
+      },
     ],
     price: 9758,
     image: 'img/product_1.jpg',
@@ -14,7 +17,10 @@ export default [
     title: 'Товар 2',
     categoryId: 2,
     colors: [
-      2,
+      {
+        id: 1,
+        value: '#939393',
+      },
     ],
     price: 2701,
     image: 'img/product_2.jpg',
@@ -24,7 +30,10 @@ export default [
     title: 'Товар 3',
     categoryId: 3,
     colors: [
-      3,
+      {
+        id: 1,
+        value: '#8BE000',
+      },
     ],
     price: 2907,
     image: 'img/product_3.jpg',
@@ -34,7 +43,10 @@ export default [
     title: 'Товар 4',
     categoryId: 4,
     colors: [
-      4,
+      {
+        id: 1,
+        value: '#8BE000',
+      },
     ],
     price: 3045,
     image: 'img/product_4.jpg',
@@ -44,7 +56,10 @@ export default [
     title: 'Товар 5',
     categoryId: 5,
     colors: [
-      5,
+      {
+        id: 1,
+        value: '#394939',
+      },
     ],
     price: 1249,
     image: 'img/product_5.jpg',
@@ -54,7 +69,10 @@ export default [
     title: 'Товар 6',
     categoryId: 1,
     colors: [
-      6,
+      {
+        id: 1,
+        value: '#000',
+      },
     ],
     price: 6544,
     image: 'img/product_6.jpg',
@@ -64,8 +82,10 @@ export default [
     title: 'Товар 7',
     categoryId: 2,
     colors: [
-      1,
-      2,
+      {
+        id: 1,
+        value: '#73B6EA',
+      },
     ],
     price: 4684,
     image: 'img/product_7.jpg',
@@ -75,8 +95,14 @@ export default [
     title: 'Товар 8',
     categoryId: 3,
     colors: [
-      2,
-      3,
+      {
+        id: 1,
+        value: '#FFBE15',
+      },
+      {
+        id: 2,
+        value: '#939393',
+      },
     ],
     price: 4817,
     image: 'img/product_8.jpg',
@@ -86,8 +112,14 @@ export default [
     title: 'Товар 9',
     categoryId: 4,
     colors: [
-      3,
-      4,
+      {
+        id: 1,
+        value: '#8BE000',
+      },
+      {
+        id: 2,
+        value: '#FF6B00',
+      },
     ],
     price: 8172,
     image: 'img/product_9.jpg',
@@ -97,9 +129,18 @@ export default [
     title: 'Товар 10',
     categoryId: 5,
     colors: [
-      4,
-      5,
-      7,
+      {
+        id: 1,
+        value: '#394939',
+      },
+      {
+        id: 2,
+        value: '#000',
+      },
+      {
+        id: 3,
+        value: '#73B6EA',
+      },
     ],
     price: 8328,
     image: 'img/product_10.jpg',
@@ -109,8 +150,14 @@ export default [
     title: 'Товар 11',
     categoryId: 1,
     colors: [
-      5,
-      6,
+      {
+        id: 1,
+        value: '#939393',
+      },
+      {
+        id: 2,
+        value: '#FF6B00',
+      },
     ],
     price: 2885,
     image: 'img/product_11.jpg',
@@ -120,8 +167,14 @@ export default [
     title: 'Товар 12',
     categoryId: 2,
     colors: [
-      1,
-      6,
+      {
+        id: 1,
+        value: '#FFBE15',
+      },
+      {
+        id: 2,
+        value: '#000',
+      },
     ],
     price: 4817,
     image: 'img/product_12.jpg',
@@ -131,8 +184,14 @@ export default [
     title: 'Товар 13',
     categoryId: 3,
     colors: [
-      2,
-      5,
+      {
+        id: 1,
+        value: '#939393',
+      },
+      {
+        id: 2,
+        value: '#8BE000',
+      },
     ],
     price: 4684,
     image: 'img/product_13.jpg',
@@ -142,9 +201,18 @@ export default [
     title: 'Товар 14',
     categoryId: 4,
     colors: [
-      3,
-      4,
-      7,
+      {
+        id: 1,
+        value: '#939393',
+      },
+      {
+        id: 2,
+        value: '#394939',
+      },
+      {
+        id: 3,
+        value: '#73B6EA',
+      },
     ],
     price: 1941,
     image: 'img/product_14.jpg',
@@ -154,8 +222,14 @@ export default [
     title: 'Товар 15',
     categoryId: 5,
     colors: [
-      5,
-      3,
+      {
+        id: 1,
+        value: '#8BE000',
+      },
+      {
+        id: 2,
+        value: '#FFBE15',
+      },
     ],
     price: 1405,
     image: 'img/product_15.jpg',
