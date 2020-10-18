@@ -30,11 +30,9 @@
 
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
-          <ul class="colors">
-            <BaseColor v-for="color in colors" :key="color.id"
-            :color="color" :chosen-color.sync="currentColorValue"/>
-          </ul>
-        </fieldset>
+        <BaseColor :colors-array="colors"
+        :chosen-color.sync="currentColorValue"/>
+      </fieldset>
 
         <fieldset class="form__block">
           <legend class="form__legend">Объемб в ГБ</legend>
