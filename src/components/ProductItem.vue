@@ -1,7 +1,7 @@
 <template>
   <li class="catalog__item">
     <a class="catalog__pic" href="#"
-    @click.prevent="$emit('gotoPage', 'product', {'id': product.id})">
+    @click.prevent="gotoPage('product', {'id': product.id})">
       <img :src="product.image" :alt="product.title">
     </a>
     <h3 class="catalog__title">
@@ -11,16 +11,22 @@
     <span class="catalog__price">{{ product.price }} ₽</span>
 
     <ul class="colors colors--black">
-      <BaseColor :colors-array="product.colors"/>
+      <BaseColors :colors-array="product.colors"/>
     </ul>
   </li>
 </template>
 
 <script>
-import BaseColor from './BaseColor.vue';
+import eventBus from '@/eventBus';
+import BaseColors from './BaseColors.vue';
 
 export default {
-  components: { BaseColor },
+  components: { BaseColors },
+  methods: {
+    gotoPage(pageName, pageParams) {
+      eventBus.$emit('gotoPage', pageName, pageParams);
+    },
+  },
   props: {
     product: Object,
   },

@@ -30,7 +30,7 @@
 
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
-        <BaseColor :colors-array="colors"
+        <BaseColors :colors-array="colors"
         :chosen-color.sync="currentColorValue"/>
       </fieldset>
 
@@ -91,10 +91,10 @@
 
 import categories from '../data/categories';
 import colors from '../data/colors';
-import BaseColor from './BaseColor.vue';
+import BaseColors from './BaseColors.vue';
 
 export default {
-  components: { BaseColor },
+  components: { BaseColors },
   data() {
     return {
       currentPriceFrom: 0,
