@@ -1,6 +1,6 @@
 <template>
   <component :is="currentPageComponent" :page-params="currentPageParams"
-  @gotoPage="(pageName, pageParams) => gotoPage(pageName, pageParams)"/>
+  :page-route="goToPage"/>
 </template>
 
 <script>
@@ -22,7 +22,7 @@ export default {
     },
   },
   methods: {
-    gotoPage(pageName, pageParams) {
+    goToPage(pageName, pageParams) {
       this.currentPage = pageName;
       this.currentPageParams = pageParams || {};
     },
