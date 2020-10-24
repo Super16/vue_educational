@@ -11,16 +11,16 @@
     <span class="catalog__price">{{ product.price }} ₽</span>
 
     <ul class="colors colors--black">
-      <BaseColor :colors-array="product.colors"/>
+      <BaseColors :colors-array="product.colors"/>
     </ul>
   </li>
 </template>
 
 <script>
-import BaseColor from './BaseColor.vue';
+import BaseColors from './BaseColors.vue';
 
 export default {
-  components: { BaseColor },
+  components: { BaseColors },
   props: {
     product: Object,
     pageRoute: Function,
