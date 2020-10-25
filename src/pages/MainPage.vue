@@ -9,7 +9,7 @@
       <ProductFilter :price-from.sync="filterPriceFrom" :price-to.sync="filterPriceTo"
       :category-id.sync="filterCategoryId" :color-value.sync="filterColorValue"/>
       <section class="catalog">
-        <ProductList :products="products" :page-route="pageRoute"/>
+        <ProductList :products="products"/>
         <BasePagination v-model="page" :count="countProducts" :per-page="productsPerPage"/>
       </section>
     </div>
@@ -23,9 +23,6 @@ import BasePagination from '@/components/BasePagination.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
 
 export default {
-  props: {
-    pageRoute: Function,
-  },
   components: { ProductList, BasePagination, ProductFilter },
   data() {
     return {

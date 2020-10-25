@@ -1,9 +1,9 @@
 <template>
   <li class="catalog__item">
-    <a class="catalog__pic" href="#"
-    @click.prevent="pageRoute('product', {'id': product.id})">
+    <router-link class="catalog__pic"
+    :to="{name: 'product', params: {id: product.id}}">
       <img :src="product.image" :alt="product.title">
-    </a>
+    </router-link>
     <h3 class="catalog__title">
       <a href="#">{{ product.title }}</a>
     </h3>
@@ -27,7 +27,6 @@ export default {
   },
   props: {
     product: Object,
-    pageRoute: Function,
   },
 };
 </script>
