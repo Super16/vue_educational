@@ -180,6 +180,15 @@ export default {
   filters: {
     numberFormat,
   },
+  watch: {
+    '$route.params.id': function () {
+      if (products.find((product) => product.id === +this.$route.params.id)) {
+        this.product();
+      } else {
+        this.$router.push({ name: 'notFound' });
+      }
+    },
+  },
   computed: {
     product() {
       return products.find((product) => product.id === +this.$route.params.id);
