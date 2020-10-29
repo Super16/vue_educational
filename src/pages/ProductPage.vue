@@ -34,7 +34,7 @@
           {{ product.title }}
         </h2>
         <div class="item__form">
-          <form class="form" action="#" method="POST">
+          <form class="form" action="#" method="POST" @submit.prevent="addToCart">
             <b class="item__price">
               {{ product.price | numberFormat }} ₽
             </b>
@@ -79,22 +79,7 @@
             </fieldset>
 
             <div class="item__row">
-              <div class="form__counter">
-                <button type="button" aria-label="Убрать один товар">
-                  <svg width="12" height="12" fill="currentColor">
-                    <use xlink:href="#icon-minus"></use>
-                  </svg>
-                </button>
-
-                <input type="text" value="1" name="count">
-
-                <button type="button" aria-label="Добавить один товар">
-                  <svg width="12" height="12" fill="currentColor">
-                    <use xlink:href="#icon-plus"></use>
-                  </svg>
-                </button>
-              </div>
-
+              <ItemAmount v-model.number="productAmount" :amount.sync="productAmount"/>
               <button class="button button--primery" type="submit">
                 В корзину
               </button>
@@ -174,18 +159,27 @@ import products from '@/data/products';
 import categories from '@/data/categories';
 import numberFormat from '@/helpers/numberFormat';
 import BaseColors from '@/components/BaseColors.vue';
+import ItemAmount from '@/components/ItemAmount.vue';
 
 export default {
-  components: { BaseColors },
+  data() {
+    return {
+      productAmount: 1,
+    };
+  },
+  components: { BaseColors, ItemAmount },
   filters: {
     numberFormat,
   },
   watch: {
     '$route.params.id': function () {
-      if (products.find((product) => product.id === +this.$route.params.id)) {
-        this.product();
-      } else {
-        this.$router.push({ name: 'notFound' });
+      if (!this.product) {
+        this.$router.replace({ name: 'notFound' });
+      }
+    },
+    productAmount(value) {
+      if (value < 1) {
+        this.productAmount = 1;
       }
     },
   },
@@ -195,6 +189,14 @@ export default {
     },
     category() {
       return categories.find((category) => category.id === this.product.categoryId);
+    },
+  },
+  methods: {
+    addToCart() {
+      this.$store.commit(
+        'addProductToCart',
+        { productId: this.product.id, amount: this.productAmount },
+      );
     },
   },
 };
