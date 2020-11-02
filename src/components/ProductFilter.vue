@@ -88,10 +88,9 @@
 </template>
 
 <script>
-
-import categories from '../data/categories';
-import colors from '../data/colors';
+import axios from 'axios';
 import BaseColors from './BaseColors.vue';
+import API_BASE_URL from '../config';
 
 export default {
   components: { BaseColors },
@@ -100,21 +99,23 @@ export default {
       currentPriceFrom: 0,
       currentPriceTo: 0,
       currentCategoryId: 0,
-      currentColorValue: '',
+      currentColorValue: 0,
+      categoriesData: null,
+      colorsData: null,
     };
   },
   props: {
     priceFrom: Number,
     priceTo: Number,
     categoryId: Number,
-    colorValue: String,
+    colorValue: Number,
   },
   computed: {
     categories() {
-      return categories;
+      return this.categoriesData ? this.categoriesData.items : [];
     },
     colors() {
-      return colors;
+      return this.colorsData ? this.colorsData.items : [];
     },
   },
   watch: {
@@ -144,6 +145,18 @@ export default {
       this.$emit('update:categoryId', 0);
       this.$emit('update:colorValue', 0);
     },
+    loadCategories() {
+      axios.get(`${API_BASE_URL}api/productCategories`)
+        .then((response) => { this.categoriesData = response.data; });
+    },
+    loadColors() {
+      axios.get(`${API_BASE_URL}api/colors`)
+        .then((response) => { this.colorsData = response.data; });
+    },
+  },
+  created() {
+    this.loadCategories();
+    this.loadColors();
   },
 };
 </script>

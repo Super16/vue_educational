@@ -3,7 +3,7 @@
     <li class="colors__item" v-for="color in colorsArray" :key="color.id">
       <label class="colors__label">
         <input class="colors__radio sr-only" type="radio" name="color"
-        :value="color.code" v-model="currentChosenColor">
+        :value="color.id" v-model="currentChosenColor">
         <span class="colors__value" :style="{ backgroundColor: color.code, }">
         </span>
       </label>
@@ -15,7 +15,7 @@
 export default {
   props: {
     colorsArray: Array,
-    chosenColor: String,
+    chosenColor: Number,
   },
   computed: {
     currentChosenColor: {
