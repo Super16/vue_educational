@@ -105,10 +105,12 @@ export default {
     };
   },
   props: {
-    priceFrom: Number,
-    priceTo: Number,
-    categoryId: Number,
-    colorValue: Number,
+    filter: {
+      priceFrom: Number,
+      priceTo: Number,
+      categoryId: Number,
+      colorValue: Number,
+    },
   },
   computed: {
     categories() {
@@ -119,31 +121,35 @@ export default {
     },
   },
   watch: {
-    priceFrom(value) {
-      this.currentPriceFrom = value;
+    'filter.priceFrom': function () {
+      this.currentPriceFrom = this.filter.priceFrom;
     },
-    priceTo(value) {
-      this.currentPriceTo = value;
+    'filter.priceTo': function () {
+      this.currentPriceTo = this.filter.priceTo;
     },
-    categoryId(value) {
-      this.currentCategoryId = value;
+    'filter.categoryId': function () {
+      this.currentCategoryId = this.filter.categoryId;
     },
-    colorValue(value) {
-      this.currentColorValue = value;
+    'filter.colorValue': function () {
+      this.currentColorValue = this.filter.colorValue;
     },
   },
   methods: {
     submit() {
-      this.$emit('update:priceFrom', this.currentPriceFrom);
-      this.$emit('update:priceTo', this.currentPriceTo);
-      this.$emit('update:categoryId', this.currentCategoryId);
-      this.$emit('update:colorValue', this.currentColorValue);
+      this.$emit('update:filter', {
+        priceFrom: this.currentPriceFrom,
+        priceTo: this.currentPriceTo,
+        categoryId: this.currentCategoryId,
+        colorValue: this.currentColorValue,
+      });
     },
     reset() {
-      this.$emit('update:priceFrom', 0);
-      this.$emit('update:priceTo', 0);
-      this.$emit('update:categoryId', 0);
-      this.$emit('update:colorValue', 0);
+      this.$emit('update:filter', {
+        priceFrom: 0,
+        priceTo: 0,
+        categoryId: 0,
+        colorValue: 0,
+      });
     },
     loadCategories() {
       axios.get(`${API_BASE_URL}api/productCategories`)

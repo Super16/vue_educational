@@ -6,9 +6,13 @@
     </div>
 
     <div class="content__catalog">
-      <ProductFilter :price-from.sync="filterPriceFrom" :price-to.sync="filterPriceTo"
-      :category-id.sync="filterCategoryId" :color-value.sync="filterColorValue"/>
+      <ProductFilter :filter.sync="filter"/>
       <section class="catalog">
+        <ProductsPreloader v-if="productsLoading"/>
+        <div v-if="productsLoadingFailed">
+          Произошла ошибка во время загрузки товаров <button @click.prevent="loadProducts">
+            Попробовать ещё раз</button>
+        </div>
         <ProductList :products="products"/>
         <BasePagination v-model="page" :count="countProducts" :per-page="productsPerPage"/>
       </section>
@@ -20,20 +24,30 @@
 import ProductList from '@/components/ProductList.vue';
 import BasePagination from '@/components/BasePagination.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
+import ProductsPreloader from '@/components/ProductsPreloader.vue';
 import axios from 'axios';
 import API_BASE_URL from '../config';
 
 export default {
-  components: { ProductList, BasePagination, ProductFilter },
+  components: {
+    ProductList,
+    BasePagination,
+    ProductFilter,
+    ProductsPreloader,
+  },
   data() {
     return {
-      filterPriceFrom: 0,
-      filterPriceTo: 0,
-      filterCategoryId: 0,
-      filterColorValue: 0,
+      filter: {
+        priceFrom: 0,
+        priceTo: 0,
+        categoryId: 0,
+        colorValue: 0,
+      },
       page: 1,
       productsPerPage: 3,
       productsData: null,
+      productsLoading: false,
+      productsLoadingFailed: false,
     };
   },
   computed: {
@@ -51,6 +65,8 @@ export default {
   },
   methods: {
     loadProducts() {
+      this.productsLoading = true;
+      this.productsLoadingFailed = false;
       clearTimeout(this.loadProductsTimer);
       this.loadProductsTimer = setTimeout(() => {
         axios.get(
@@ -58,13 +74,15 @@ export default {
             params: {
               page: this.page,
               limit: this.productsPerPage,
-              categoryId: this.filterCategoryId,
-              minPrice: this.filterPriceFrom,
-              maxPrice: this.filterPriceTo,
-              colorId: this.filterColorValue,
+              categoryId: this.filter.categoryId,
+              minPrice: this.filter.priceFrom,
+              maxPrice: this.filter.priceTo,
+              colorId: this.filter.colorValue,
             },
           },
-        ).then((response) => { this.productsData = response.data; });
+        ).then((response) => { this.productsData = response.data; })
+          .catch(() => { this.productsLoadingFailed = true; })
+          .then(() => { this.productsLoading = false; });
       }, 0);
     },
   },
@@ -72,17 +90,11 @@ export default {
     page() {
       this.loadProducts();
     },
-    filterPriceFrom() {
-      this.loadProducts();
-    },
-    filterPriceTo() {
-      this.loadProducts();
-    },
-    filterCategoryId() {
-      this.loadProducts();
-    },
-    filterColorValue() {
-      this.loadProducts();
+    filter: {
+      handler() {
+        this.loadProducts();
+      },
+      deep: true,
     },
   },
   created() {
