@@ -121,16 +121,10 @@ export default {
     },
   },
   watch: {
-    'filter.priceFrom': function () {
+    filter() {
       this.currentPriceFrom = this.filter.priceFrom;
-    },
-    'filter.priceTo': function () {
       this.currentPriceTo = this.filter.priceTo;
-    },
-    'filter.categoryId': function () {
       this.currentCategoryId = this.filter.categoryId;
-    },
-    'filter.colorValue': function () {
       this.currentColorValue = this.filter.colorValue;
     },
   },
