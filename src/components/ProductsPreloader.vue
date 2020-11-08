@@ -6,7 +6,8 @@
 
 <style scoped>
 .center {
-  margin: auto;
+  display: flex;
+  justify-content: center;
 }
 .loader {
   border: 8px solid #f4f4f4;
