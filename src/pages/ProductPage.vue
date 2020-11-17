@@ -50,10 +50,13 @@
 
             <div class="item__row">
               <ItemAmount v-model.number="productAmount" :amount.sync="productAmount"/>
-              <button class="button button--primery" type="submit">
+              <button class="button button--primery" type="submit"
+              :disabled="productAddSending">
                 В корзину
               </button>
             </div>
+            <div v-show="productAdded">Товар добавлен в корзину</div>
+            <div v-show="productAddSending">Добавляем товар в корзину...</div>
           </form>
         </div>
       </div>
@@ -97,6 +100,7 @@ import BaseColors from '@/components/BaseColors.vue';
 import ItemAmount from '@/components/ItemAmount.vue';
 import ProductsPreloader from '@/components/ProductsPreloader.vue';
 import axios from 'axios';
+import { mapActions } from 'vuex';
 import API_BASE_URL from '../config';
 
 export default {
@@ -106,6 +110,8 @@ export default {
       productData: null,
       productLoading: false,
       productLoadingFailed: false,
+      productAdded: false,
+      productAddSending: false,
     };
   },
   components: { BaseColors, ItemAmount, ProductsPreloader },
@@ -134,11 +140,15 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['addProductToCart']),
     addToCart() {
-      this.$store.commit(
-        'addProductToCart',
-        { productId: this.product.id, amount: this.productAmount },
-      );
+      this.productAdded = false;
+      this.productAddSending = true;
+      this.addProductToCart({ productId: this.product.id, amount: this.productAmount })
+        .then(() => {
+          this.productAdded = true;
+          this.productAddSending = false;
+        });
     },
     loadProduct() {
       this.productLoading = true;
