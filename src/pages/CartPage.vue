@@ -37,9 +37,10 @@
               Итого: <span>{{ totalPrice | numberFormat }} ₽</span>
             </p>
 
-            <button class="cart__button button button--primery" type="submit">
+            <router-link tag="button" :to="{name: 'order'}" v-show="productsCount > 0"
+            class="cart__button button button--primery" type="submit">
               Оформить заказ
-            </button>
+            </router-link>
           </div>
         </form>
       </section>
@@ -49,20 +50,12 @@
 
 <script>
 import numberFormat from '@/helpers/numberFormat';
+import declOfNum from '@/helpers/declOfNum';
 import { mapGetters } from 'vuex';
 import CartItem from '@/components/CartItem.vue';
 import ProductsPreloader from '@/components/ProductsPreloader.vue';
 
 export default {
-  data() {
-    return {
-      titles: [
-        'товар',
-        'товара',
-        'товаров',
-      ],
-    };
-  },
   components: { CartItem, ProductsPreloader },
   filters: {
     numberFormat,
@@ -73,13 +66,7 @@ export default {
       totalPrice: 'cartTotalPrice',
       productsCount: 'cartProductsCount',
     }),
-    declOfNum() {
-      const cases = [2, 0, 1, 1, 1, 2];
-      return this.titles[
-        (this.productsCount % 100 > 4 && this.productsCount % 100 < 20)
-          ? 2 : cases[(this.productsCount % 10 < 5) ? this.productsCount % 10 : 5]
-      ];
-    },
+    declOfNum,
   },
 };
 </script>
