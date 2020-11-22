@@ -47,6 +47,10 @@ export default new Vuex.Store({
     turnOffLoading(state) {
       state.cartLoading = false;
     },
+    resetCart(state) {
+      state.cartProducts = [];
+      state.cartProductsData = [];
+    },
   },
   getters: {
     cartDetailProducts(state) {
