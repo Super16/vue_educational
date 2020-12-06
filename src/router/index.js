@@ -5,6 +5,7 @@ import NotFoundPage from '@/pages/NotFoundPage.vue';
 import ProductPage from '@/pages/ProductPage.vue';
 import CartPage from '@/pages/CartPage.vue';
 import OrderPage from '@/pages/OrderPage.vue';
+import OrderInfoPage from '@/pages/OrderInfoPage.vue';
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,14 @@ const routes = [
     path: '/order',
     meta: {
       pageName: 'Оформление заказа',
+    },
+  },
+  {
+    name: 'orderInfo',
+    component: OrderInfoPage,
+    path: '/order/:id',
+    meta: {
+      pageName: 'Информация о заказе',
     },
   },
   {
