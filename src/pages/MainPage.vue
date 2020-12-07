@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import ProductList from '@/components/ProductList.vue';
-import BasePagination from '@/components/BasePagination.vue';
-import ProductFilter from '@/components/ProductFilter.vue';
-import ProductsPreloader from '@/components/ProductsPreloader.vue';
+import ProductList from '@/components/product/ProductList.vue';
+import BasePagination from '@/components/ui/BasePagination.vue';
+import ProductFilter from '@/components/ui/ProductFilter.vue';
+import ProductsPreloader from '@/components/ui/ProductsPreloader.vue';
 import axios from 'axios';
 import API_BASE_URL from '../config';
 

@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import OrderInfo from '@/components/OrderInfo.vue';
+import OrderInfo from '@/components/ui/OrderInfo.vue';
 
 export default {
   components: { OrderInfo },

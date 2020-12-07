@@ -119,9 +119,9 @@ import declOfProducts from '@/helpers/declOfProducts';
 import numberFormat from '@/helpers/numberFormat';
 import textForms from '@/data/textForms';
 import { mapGetters } from 'vuex';
-import BaseFormText from '@/components/BaseFormText.vue';
-import BaseFormTextarea from '@/components/BaseFormTextarea.vue';
-import ProductsPreloader from '@/components/ProductsPreloader.vue';
+import BaseFormText from '@/components/ui/BaseFormText.vue';
+import BaseFormTextarea from '@/components/ui/BaseFormTextarea.vue';
+import ProductsPreloader from '@/components/ui/ProductsPreloader.vue';
 import axios from 'axios';
 import API_BASE_URL from '../config';
 

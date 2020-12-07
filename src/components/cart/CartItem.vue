@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import ItemAmount from '@/components/ItemAmount.vue';
+import ItemAmount from '@/components/product/ItemAmount.vue';
 import numberFormat from '@/helpers/numberFormat';
 import { mapActions } from 'vuex';
 

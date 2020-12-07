@@ -89,8 +89,8 @@
 
 <script>
 import axios from 'axios';
-import BaseColors from './BaseColors.vue';
-import API_BASE_URL from '../config';
+import BaseColors from '@/components/ui/BaseColors.vue';
+import API_BASE_URL from '@/config';
 
 export default {
   components: { BaseColors },

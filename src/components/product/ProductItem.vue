@@ -18,7 +18,7 @@
 
 <script>
 import numberFormat from '@/helpers/numberFormat';
-import BaseColors from './BaseColors.vue';
+import BaseColors from '@/components/ui/BaseColors.vue';
 
 export default {
   components: { BaseColors },

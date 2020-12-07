@@ -96,9 +96,9 @@
 
 <script>
 import numberFormat from '@/helpers/numberFormat';
-import BaseColors from '@/components/BaseColors.vue';
-import ItemAmount from '@/components/ItemAmount.vue';
-import ProductsPreloader from '@/components/ProductsPreloader.vue';
+import BaseColors from '@/components/ui/BaseColors.vue';
+import ItemAmount from '@/components/product/ItemAmount.vue';
+import ProductsPreloader from '@/components/ui/ProductsPreloader.vue';
 import axios from 'axios';
 import { mapActions } from 'vuex';
 import API_BASE_URL from '../config';

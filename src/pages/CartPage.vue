@@ -55,8 +55,8 @@
 import numberFormat from '@/helpers/numberFormat';
 import declOfProducts from '@/helpers/declOfProducts';
 import { mapGetters } from 'vuex';
-import CartItem from '@/components/CartItem.vue';
-import ProductsPreloader from '@/components/ProductsPreloader.vue';
+import CartItem from '@/components/cart/CartItem.vue';
+import ProductsPreloader from '@/components/ui/ProductsPreloader.vue';
 
 export default {
   components: { CartItem, ProductsPreloader },

@@ -1,4 +1,4 @@
-import BaseFormField from '@/components/BaseFormField.vue';
+import BaseFormField from '@/components/ui/BaseFormField.vue';
 
 export default {
   props: {
