@@ -1,9 +1,9 @@
 <template>
   <div>
-    <main class="content container" v-if="productLoading">
+    <main class="content container" v-if="this.$store.state.products.productsLoading">
       <ProductsPreloader/>
     </main>
-    <main class="content container" v-if="productData">
+    <main class="content container" v-if="product">
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
@@ -13,7 +13,7 @@
         </li>
         <li class="breadcrumbs__item">
           <router-link class="breadcrumbs__link" :to="{name: 'main'}">
-            {{ category.title }}
+            {{ product.category.title }}
           </router-link>
         </li>
         <li class="breadcrumbs__item">
@@ -62,29 +62,6 @@
       </div>
 
       <div class="item__desc">
-        <ul class="tabs">
-          <li class="tabs__item">
-            <a class="tabs__link tabs__link--current">
-              Описание
-            </a>
-          </li>
-          <li class="tabs__item">
-            <a class="tabs__link" href="#">
-              Характеристики
-            </a>
-          </li>
-          <li class="tabs__item">
-            <a class="tabs__link" href="#">
-              Гарантия
-            </a>
-          </li>
-          <li class="tabs__item">
-            <a class="tabs__link" href="#">
-              Оплата и доставка
-            </a>
-          </li>
-        </ul>
-
         <div class="item__content">
           {{ product.content }}
         </div>
@@ -99,17 +76,11 @@ import numberFormat from '@/helpers/numberFormat';
 import BaseColors from '@/components/ui/BaseColors.vue';
 import ItemAmount from '@/components/product/ItemAmount.vue';
 import ProductsPreloader from '@/components/ui/ProductsPreloader.vue';
-import axios from 'axios';
-import { mapActions } from 'vuex';
-import API_BASE_URL from '../config';
 
 export default {
   data() {
     return {
       productAmount: 1,
-      productData: null,
-      productLoading: false,
-      productLoadingFailed: false,
       productAdded: false,
       productAddSending: false,
     };
@@ -133,37 +104,24 @@ export default {
   },
   computed: {
     product() {
-      return this.productData;
-    },
-    category() {
-      return this.productData.category;
+      return this.$store.state.products.singleProductData;
     },
   },
   methods: {
-    ...mapActions(['addProductToCart']),
     addToCart() {
       this.productAdded = false;
       this.productAddSending = true;
-      this.addProductToCart({ productId: this.product.id, amount: this.productAmount })
-        .then(() => {
-          this.productAdded = true;
-          this.productAddSending = false;
-        });
+      this.$store.dispatch(
+        'addProductToCart',
+        { productId: this.product.id, amount: this.productAmount },
+        { root: true },
+      ).then(() => {
+        this.productAdded = true;
+        this.productAddSending = false;
+      });
     },
     loadProduct() {
-      this.productLoading = true;
-      this.productLoadingFailed = false;
-      clearTimeout(this.loadProductsTimer);
-      this.loadProductsTimer = setTimeout(() => {
-        axios.get(
-          `${API_BASE_URL}api/products/${this.$route.params.id}`,
-        ).then((response) => { this.productData = response.data; })
-          .catch(() => {
-            this.productLoadingFailed = true;
-            this.$router.replace({ name: 'notFound' });
-          })
-          .then(() => { this.productLoading = false; });
-      }, 0);
+      this.$store.dispatch('loadSingleProduct', this.$route.params.id, { root: true });
     },
   },
 };

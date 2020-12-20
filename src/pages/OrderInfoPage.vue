@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main class="content container" v-if="order.id">
+    <main class="content container" v-if="order && order.id">
       <div class="content__top">
         <ul class="breadcrumbs">
           <li class="breadcrumbs__item">
@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     order() {
-      return this.$store.state.orderInfo;
+      return this.$store.state.cart.orderInfo;
     },
   },
   methods: {

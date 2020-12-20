@@ -28,7 +28,7 @@
     </div>
 
     <section class="cart">
-      <ProductsPreloader v-if="sendingOrder"/>
+      <ProductsPreloader v-if="this.$store.state.cart.sendingOrder"/>
       <form class="cart__form form" action="#" method="POST"
       @submit.prevent="order">
         <div class="cart__field">
@@ -38,52 +38,6 @@
             v-model="formData[form.data]" :error="formError[form.data]"/>
             <BaseFormTextarea title="Комментарий к заказу" placeholder="Ваши пожелания"
             v-model="formData.comment" :error="formError.comment"/>
-          </div>
-
-          <div class="cart__options">
-            <h3 class="cart__title">Доставка</h3>
-            <ul class="cart__options options">
-              <li class="options__item">
-                <label class="options__label">
-                  <input class="options__radio sr-only" type="radio"
-                  name="delivery" value="0" checked="">
-                  <span class="options__value">
-                    Самовывоз <b>бесплатно</b>
-                  </span>
-                </label>
-              </li>
-              <li class="options__item">
-                <label class="options__label">
-                  <input class="options__radio sr-only" type="radio"
-                  name="delivery" value="500">
-                  <span class="options__value">
-                    Курьером <b>500 ₽</b>
-                  </span>
-                </label>
-              </li>
-            </ul>
-
-            <h3 class="cart__title">Оплата</h3>
-            <ul class="cart__options options">
-              <li class="options__item">
-                <label class="options__label">
-                  <input class="options__radio sr-only" type="radio"
-                  name="pay" value="card">
-                  <span class="options__value">
-                    Картой при получении
-                  </span>
-                </label>
-              </li>
-              <li class="options__item">
-                <label class="options__label">
-                  <input class="options__radio sr-only" type="radio"
-                  name="pay" value="cash">
-                  <span class="options__value">
-                    Наличными при получении
-                  </span>
-                </label>
-              </li>
-            </ul>
           </div>
         </div>
 
@@ -122,15 +76,11 @@ import { mapGetters } from 'vuex';
 import BaseFormText from '@/components/ui/BaseFormText.vue';
 import BaseFormTextarea from '@/components/ui/BaseFormTextarea.vue';
 import ProductsPreloader from '@/components/ui/ProductsPreloader.vue';
-import axios from 'axios';
-import API_BASE_URL from '../config';
 
 export default {
   data() {
     return {
       formData: {},
-      formError: {},
-      formErrorMessage: '',
       sendingOrder: false,
     };
   },
@@ -152,40 +102,21 @@ export default {
     textForms() {
       return textForms;
     },
+    formError() {
+      return this.$store.state.cart.formError;
+    },
+    formErrorMessage() {
+      return this.$store.state.cart.formErrorMessage;
+    },
   },
   methods: {
     order() {
-      this.formError = {};
-      this.formErrorMessage = '';
-      this.sendingOrder = true;
-      axios.post(
-        `${API_BASE_URL}api/orders`, {
-          ...this.formData,
-        }, {
-          params: {
-            userAccessKey: this.$store.state.userAccessKey,
-          },
-        },
-      ).then(
-        (response) => {
-          this.$store.commit('resetCart');
-          this.$store.commit('updateOrderInfo', response.data);
-          this.sendingOrder = false;
-          this.$router.push(
-            {
-              name: 'orderInfo',
-              params: {
-                id: response.data.id,
-              },
-            },
-          );
-        },
-      ).catch((error) => {
-        this.formError = error.response.data.error.request || {};
-        this.formErrorMessage = error.response.data.error.message;
-        this.sendingOrder = false;
-      });
+      this.$store.dispatch('order', this.formData, { root: true });
     },
+  },
+  created() {
+    this.$store.commit('updateFormError', {}, { root: true });
+    this.$store.commit('updateFormErrorMessage', '', { root: true });
   },
 };
 </script>

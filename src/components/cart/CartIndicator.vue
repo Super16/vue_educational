@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link class="header__cart" aria-label="Корзина с товарами"
-    :to="{name: 'cart'}" v-if="this.$store.state.cartLoading">
+    :to="{name: 'cart'}" v-if="this.$store.state.cart.cartLoading">
       <div class="center">
         <div class="loader"></div>
       </div>
@@ -12,7 +12,7 @@
         <use xlink:href="#icon-cart"></use>
       </svg>
       <span class="header__count" aria-label="Количество товаров">
-        {{ $store.state.cartProducts.length }}
+        {{ $store.state.cart.cartProducts.length }}
       </span>
     </router-link>
   </div>
@@ -40,5 +40,13 @@
 
 <script>
 export default {
+  methods: {
+    loadCart() {
+      this.$store.dispatch('loadCart', { root: true });
+    },
+  },
+  created() {
+    this.loadCart();
+  },
 };
 </script>

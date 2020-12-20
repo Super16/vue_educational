@@ -2,19 +2,19 @@
   <main class="content container">
     <div class="content__top content__top--catalog">
       <h1 class="content__title">Каталог</h1>
-      <span class="content__info">{{ countProducts }}</span>
+      <span class="content__info">{{ productsCount }}</span>
     </div>
 
     <div class="content__catalog">
       <ProductFilter :filter.sync="filter"/>
       <section class="catalog">
-        <ProductsPreloader v-if="productsLoading"/>
-        <div v-if="productsLoadingFailed">
+        <ProductsPreloader v-if="this.$store.state.products.productsLoading"/>
+        <div v-if="this.$store.state.products.productsLoadingFailed">
           Произошла ошибка во время загрузки товаров <button @click.prevent="loadProducts">
             Попробовать ещё раз</button>
         </div>
-        <ProductList :products="products"/>
-        <BasePagination v-model="page" :count="countProducts" :per-page="productsPerPage"/>
+        <ProductList :products="detailProducts"/>
+        <BasePagination v-model="page" :count="productsCount" :per-page="productsPerPage"/>
       </section>
     </div>
   </main>
@@ -25,8 +25,7 @@ import ProductList from '@/components/product/ProductList.vue';
 import BasePagination from '@/components/ui/BasePagination.vue';
 import ProductFilter from '@/components/ui/ProductFilter.vue';
 import ProductsPreloader from '@/components/ui/ProductsPreloader.vue';
-import axios from 'axios';
-import API_BASE_URL from '../config';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -46,44 +45,26 @@ export default {
       page: 1,
       productsPerPage: 3,
       productsData: null,
-      productsLoading: false,
-      productsLoadingFailed: false,
     };
   },
   computed: {
-    products() {
-      return this.productsData
-        ? this.productsData.items.map((product) => ({
-          ...product,
-          image: product.image.file.url,
-        }))
-        : [];
-    },
-    countProducts() {
-      return this.productsData ? this.productsData.pagination.total : 0;
-    },
+    ...mapGetters([
+      'productsCount',
+      'detailProducts',
+    ]),
   },
   methods: {
     loadProducts() {
-      this.productsLoading = true;
-      this.productsLoadingFailed = false;
-      clearTimeout(this.loadProductsTimer);
-      this.loadProductsTimer = setTimeout(() => {
-        axios.get(
-          `${API_BASE_URL}api/products`, {
-            params: {
-              page: this.page,
-              limit: this.productsPerPage,
-              categoryId: this.filter.categoryId,
-              minPrice: this.filter.priceFrom,
-              maxPrice: this.filter.priceTo,
-              colorId: this.filter.colorValue,
-            },
-          },
-        ).then((response) => { this.productsData = response.data; })
-          .catch(() => { this.productsLoadingFailed = true; })
-          .then(() => { this.productsLoading = false; });
-      }, 0);
+      const payload = {
+        page: this.page,
+        limit: this.productsPerPage,
+        categoryId: this.filter.categoryId,
+        colorId: this.filter.colorValue,
+        minPrice: this.filter.priceFrom,
+        maxPrice: this.filter.priceTo,
+      };
+      this.$store.dispatch('loadProducts', payload, { root: true });
+      this.productsData = this.$store.state.products.productsData;
     },
   },
   watch: {

@@ -47,14 +47,15 @@ export default {
         this.$store.dispatch('updateCartProductAmount', {
           productId: this.item.productId,
           amount: value,
-        });
+        },
+        { root: true });
       },
     },
   },
   methods: {
     ...mapActions(['deleteCartProduct']),
     deleteProduct() {
-      this.deleteCartProduct({ productId: this.item.product.id })
+      this.deleteCartProduct({ productId: this.item.product.id }, { root: true })
         .then(() => {});
     },
   },
